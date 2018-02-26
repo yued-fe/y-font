@@ -29,7 +29,7 @@ router.post('/', function(req, res, next) {
 
 function handleFont(req, res) {
 
-  var absUrl = "http://webfont.pub.is26.com";
+  var absUrl = Y_CONFIG.domain;
   var styleData;
   var fontmin;
   var originalname = req.body.font + '.ttf';

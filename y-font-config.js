@@ -3,7 +3,7 @@
 
 module.exports = {
 	port: process.env.PORT || 3000,
-	domain: 'https://font.pub.is26.com',
+	domain: 'http://font.pub.is26.com',
 	staticDomain: '',
 	storage: {
 		SecretId: 'AKIDOqb8e2KwJIJ60TtxC66vBxd9qyesrlO6',
