@@ -9,7 +9,16 @@
   },
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.18.2",
+    "cookie-parser": "^1.4.3",
+    "easy-zip": "0.0.4",
     "express": "^4.16.2",
-    "fontmin": "^0.9.6"
+    "fontmin": "^0.9.6",
+    "gulp-rename": "^1.2.2",
+    "into-stream": "^3.1.0",
+    "logger": "0.0.1",
+    "morgan": "^1.9.0",
+    "multer": "^1.3.0",
+    "node-uuid": "^1.4.8"
   }
 }
