@@ -3,19 +3,18 @@ var fs = require('fs');
 var path = require('path');
 var express = require('express');
 var router = express.Router();
+var Fontmin = require('fontmin');
 var intoStream = require('into-stream');
 var uuid = require('node-uuid');
 var rename = require('gulp-rename');
 var EasyZip = require('easy-zip').EasyZip;
 
 router.post('/', function(req, res, next) {
-  console.log('读取文件:' + req.body.font + '.ttf');
-  console.log(path.join(process.cwd(), 'public', 'uploads', req.body.font + '.ttf'))
+  console.log('[读取文件]' + path.join(process.cwd(), 'public', 'uploads', req.body.font + '.ttf'))
   fs.readFile(path.join(process.cwd(), 'public', 'uploads', req.body.font + '.ttf'), (err, data) => {
     if (err) throw err;
     handleFont(req, res);
   });
-
 });
 
 function handleFont(req, res) {
@@ -31,7 +30,7 @@ function handleFont(req, res) {
   var cssPath = path.join(process.cwd(), 'public', 'fontmin', id, originalname.replace(/\.ttf/, '.css'));
   var reg = /url\("\/fontmin\/([^/]+)\//g;
   var outputName = path.join(process.cwd(), 'public', 'fontmin', id + '.zip');
- 
+  console.log(req.body.text)
   if (req.body.text.length > 0) {
     fontmin = new Fontmin()
       .src(output)
@@ -62,7 +61,6 @@ function handleFont(req, res) {
         base64: true, 
       })) // css 生成插件
       .dest(dest);
-
   }
 
   runFontmin(fontmin)
@@ -71,10 +69,7 @@ function handleFont(req, res) {
     })
     .then(function(data) {
       styleData = data;
-
-
       data = data.replace(reg, absUrl + 'url("/fonts/');
-
       return writeFile(cssPath, data);
     })
     .then(function() {
