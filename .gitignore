@@ -7,4 +7,7 @@ npm-debug.log
 
 # Mac
 .DS_Store
+public/fontmin/
+# Config
+y-config-config.js
 

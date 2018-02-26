@@ -1,4 +1,6 @@
 'use strict';
+
+var Y_CONFIG = require('../y-font-config');
 var fs = require('fs');
 var path = require('path');
 var express = require('express');
@@ -6,8 +8,16 @@ var router = express.Router();
 var Fontmin = require('fontmin');
 var intoStream = require('into-stream');
 var uuid = require('node-uuid');
+var crypto = require('crypto');
+var utils = require('utility');
 var rename = require('gulp-rename');
 var EasyZip = require('easy-zip').EasyZip;
+
+// 储存相关
+var COS = require('cos-nodejs-sdk-v5');
+console.log(Y_CONFIG.storage)
+var cos = new COS(Y_CONFIG.storage);
+
 
 router.post('/', function(req, res, next) {
   console.log('[读取文件]' + path.join(process.cwd(), 'public', 'uploads', req.body.font + '.ttf'))
@@ -18,19 +28,21 @@ router.post('/', function(req, res, next) {
 });
 
 function handleFont(req, res) {
+
   var absUrl = "http://webfont.pub.is26.com";
   var styleData;
   var fontmin;
   var originalname = req.body.font + '.ttf';
   var output = path.join(process.cwd(), 'public', 'uploads', originalname);
   var fontFamily = originalname.replace(/\.ttf/, '');
-  var id = uuid.v1();
+  var id = utils.md5(req.body.font + (req.body.text).split('').sort().join(''));
   var dest = path.join(process.cwd(), 'public', 'fontmin', id);
   var fontPath = absUrl + '/fontmin/' + id + '/';
   var cssPath = path.join(process.cwd(), 'public', 'fontmin', id, originalname.replace(/\.ttf/, '.css'));
   var reg = /url\("\/fontmin\/([^/]+)\//g;
   var outputName = path.join(process.cwd(), 'public', 'fontmin', id + '.zip');
-  console.log(req.body.text)
+
+
   if (req.body.text.length > 0) {
     fontmin = new Fontmin()
       .src(output)
@@ -44,9 +56,10 @@ function handleFont(req, res) {
       .use(Fontmin.css({
         fontPath: fontPath,
         asFileName: true,
-        base64: true, 
+        base64: true,
       })) // css 生成插件
-      .dest(dest);
+      .dest(dest)
+
   } else {
     fontmin = new Fontmin()
       .src(output)
@@ -58,10 +71,11 @@ function handleFont(req, res) {
       .use(Fontmin.css({
         fontPath: fontPath,
         asFileName: true,
-        base64: true, 
+        base64: true,
       })) // css 生成插件
-      .dest(dest);
+      .dest(dest)
   }
+
 
   runFontmin(fontmin)
     .then(function() {
@@ -74,14 +88,38 @@ function handleFont(req, res) {
     })
     .then(function() {
       return zipFonts(dest, outputName);
+    }).then(function() {
+      console.log(path.join(process.cwd(), 'public', 'fontmin', id + '.zip'))
+      cos.sliceUploadFile({
+        Bucket: Y_CONFIG.storage.Bucket,
+        /* 必须 */ // Bucket 格式：test-1250000000
+        Region: Y_CONFIG.storage.Region,
+        Key: path.join('fontmin', id + '.zip'),
+        /* 必须 */
+        FilePath: path.join(process.cwd(), 'public', 'fontmin', id + '.zip'),
+        /* 必须 */
+        TaskReady: function(tid) {},
+        onHashProgress: function(progressData) {
+          console.log(JSON.stringify(progressData));
+        },
+        onProgress: function(progressData) {
+          console.log(JSON.stringify(progressData));
+        },
+      }, function(err, data) {
+        console.log(err || data);
+      })
     })
     .then(function() {
       res.json({
+        meta: {
+          md5: id,
+          text: (req.body.text).split('').sort().join(''),
+          textLength: req.body.text.length
+        },
         style: styleData,
         fontFamily: fontFamily,
-        cssUrl:absUrl + '/fontmin/' + id + '/' + req.body.font +  '.css',
+        cssUrl: absUrl + '/fontmin/' + id + '/' + req.body.font + '.css',
         zipUrl: absUrl + '/fontmin/' + id + '.zip'
-
       });
 
     })
@@ -140,7 +178,6 @@ function zipFonts(input, output) {
     });
   });
 }
-
 
 
 
