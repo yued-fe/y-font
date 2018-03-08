@@ -34,6 +34,7 @@ router.post('/', function(req, res, next) {
 });
 
 function handleFont(req, res) {
+  console.log(typeof(fontList[req.body.font]))
   var fontminOptions = Object.assign({
     base64: true, // inject base64 data:application/x-font-ttf; (gzip font with css). 
     // default = false
@@ -105,7 +106,7 @@ function handleFont(req, res) {
           text: fontString,
           textLength: fontString.length
         },
-        fontName: !fontList[req.body.font].fontDes ? fontList[req.body.font].fontDes : '未找到字体描述',
+        fontName: fontList[req.body.font].fontDes,
         fontFamily: fontFamily,
         cssUrl: absUrl + '/fontmin/' + id + '/' + req.body.font + '.css',
         zipUrl: absUrl + '/fontmin/' + id + '.zip',
@@ -125,7 +126,6 @@ function runFontmin(fontmin) {
       if (err) {
         return reject(err);
       }
-
       resolve();
     });
   });
