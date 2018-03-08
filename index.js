@@ -1,16 +1,17 @@
-var express = require('express');
-var express = require('express');
-var path = require('path');
-var app = express();
-var Fontmin = require('fontmin');
-var logger = require('morgan');
-var multer  = require('multer');
+const Y_CONFIG = require('./y-font-config');
+const express = require('express');
+const path = require('path');
+const app = express();
+const Fontmin = require('fontmin');
+const logger = require('morgan');
+const multer  = require('multer');
+const chalk = require('chalk');
 
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
 
-var storage = multer.memoryStorage();
-var upload = multer({ storage: storage });
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -18,9 +19,13 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // 配置路由
-var getFont = require('./routes/font');
+const getFont = require('./routes/getFont');
+const getFontList = require('./routes/getFontList');
 
-app.use('/api/v1/get-font', upload.any(), getFont);
+app.use(Y_CONFIG.apiName + '/get-font', upload.any(), getFont);
+app.use(Y_CONFIG.apiName + '/get-font-list', upload.any(), getFontList);
 
-
-app.listen(3000);
+app.listen(Y_CONFIG.port, () => {
+    console.log(chalk.blue('[服务环境]:') + chalk.green(app.get('env')));
+    console.log(chalk.blue('[服务端口]:') + chalk.green(Y_CONFIG.port));
+})

@@ -9,7 +9,9 @@
   },
   "license": "ISC",
   "dependencies": {
+    "async": "^2.6.0",
     "body-parser": "^1.18.2",
+    "chalk": "^2.3.2",
     "cookie-parser": "^1.4.3",
     "cos-nodejs-sdk-v5": "^2.2.6",
     "crypto": "^1.0.1",
