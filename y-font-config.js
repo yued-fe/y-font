@@ -3,7 +3,7 @@
 
 module.exports = {
 	port: process.env.PORT || 3000,
-	domain: 'http://font.pub.is26.com',
+	domain: 'http://webfont.is26.com',
 	apiName:'/api/v1',
 	staticDomain: '',
 	storage: {
