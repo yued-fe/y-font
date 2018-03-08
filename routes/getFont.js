@@ -100,7 +100,7 @@ function handleFont(req, res) {
           text: fontString,
           textLength: fontString.length
         },
-        fontName: !fontList[req.body.font].fontDes ? fontList[req.body.font].fontDes : '未找到字体',
+        fontName: fontList[req.body.font].fontDes,
         fontFamily: fontFamily,
         cssUrl: absUrl + '/fontmin/' + id + '/' + req.body.font + '.css',
         zipUrl: absUrl + '/fontmin/' + id + '.zip',
