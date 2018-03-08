@@ -115,7 +115,10 @@ function handleFont(req, res) {
 
     })
     .catch(function(err) {
-      throw new Error(err);
+      res.send({
+        code:1,
+        msg:'生成字体出错'
+      })
     });
 
 }
