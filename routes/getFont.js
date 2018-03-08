@@ -98,6 +98,8 @@ function handleFont(req, res) {
     })
     .then(function() {
       res.json({
+        code:0,
+        msg:'成功生成字体文件',
         meta: {
           md5: id,
           text: fontString,
