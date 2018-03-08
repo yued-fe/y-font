@@ -12,6 +12,10 @@ module.exports = {
 		"fontDes": "锐字工房洪荒之力黑简1.0",
 		"fontSrc": "RZGFHHZLHJ.ttf"
 	},
+	"RZGFPBHJ":{
+		"fontDes": "锐字工房",
+		"fontSrc": "RZGFPBHJ.ttf"
+	},
 	"RZGFDHDHJ": {
 		"fontDes": "锐字工房光辉大黑简1.0",
 		"fontSrc": "RZGFDHDHJ.ttf"

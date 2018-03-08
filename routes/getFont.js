@@ -22,10 +22,13 @@ var cos = new COS(Y_CONFIG.storage);
 var tools = require('../lib/tool');
 
 router.post('/', function(req, res, next) {
-
-  console.log(path.join(process.cwd(), 'assets', 'fonts', req.body.font + '.ttf'))
   fs.readFile(path.join(process.cwd(), 'assets', 'fonts', req.body.font + '.ttf'), (err, data) => {
-    if (err) throw err;
+    if (err){
+      res.send({
+        "code":1,
+        "msg":"字体参数错误"
+      })
+    };
     handleFont(req, res);
   });
 });
@@ -100,7 +103,7 @@ function handleFont(req, res) {
           text: fontString,
           textLength: fontString.length
         },
-        fontName: fontList[req.body.font].fontDes,
+        fontName: !fontList[req.body.font].fontDes ? fontList[req.body.font].fontDes : '未找到字体描述',
         fontFamily: fontFamily,
         cssUrl: absUrl + '/fontmin/' + id + '/' + req.body.font + '.css',
         zipUrl: absUrl + '/fontmin/' + id + '.zip',
