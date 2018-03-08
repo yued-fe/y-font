@@ -35,7 +35,7 @@ function handleFont(req, res) {
     base64: true, // inject base64 data:application/x-font-ttf; (gzip font with css). 
     // default = false
     glyph: false, // generate class for each glyph. default = false
-    asFileName: false, // rewrite fontFamily as filename force. default = false
+    asFileName: true, // rewrite fontFamily as filename force. default = false
   }, req.body.fontOption);
 
   var fontString = tools.getUniqSortedSting(req.body.text);
@@ -100,7 +100,7 @@ function handleFont(req, res) {
           text: fontString,
           textLength: fontString.length
         },
-        fontName: fontList[req.body.font].fontDes,
+        fontName: !fontList[req.body.font].fontDes ? fontList[req.body.font].fontDes '未找到字体',
         fontFamily: fontFamily,
         cssUrl: absUrl + '/fontmin/' + id + '/' + req.body.font + '.css',
         zipUrl: absUrl + '/fontmin/' + id + '.zip',
