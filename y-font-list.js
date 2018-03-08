@@ -40,9 +40,9 @@ module.exports = {
 		"fontDes": "汉仪尚巍手书",
 		"fontSrc": "HYSWSH.ttf"
 	},
-	"HPQDMCJ": {
+	"HKYKJT": {
 		"fontDes": "华康颜楷简体",
-		"fontSrc": "HPQDMCJ.ttf"
+		"fontSrc": "HKYKJT.ttf"
 	},
 	"HKLMJT": {
 		"fontDes": "华康龙门简体",
