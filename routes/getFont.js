@@ -115,9 +115,12 @@ function handleFont(req, res) {
 
     })
     .catch(function(err) {
+      console.log(fontList)
+      console.log(req.body.font)
+      console.log(err)
       res.send({
         code:1,
-        msg:'生成字体出错'
+        msg:'生成字体出错',
       })
     });
 
