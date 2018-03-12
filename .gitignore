@@ -9,5 +9,4 @@ npm-debug.log
 .DS_Store
 public/fontmin/
 # Config
-y-config-config.js
 
