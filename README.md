@@ -50,7 +50,7 @@ module.exports = {
 
 * `GET` `{apiName}/get-font-list`
 
-可获得当前维护的所有字体。
+可获得当前维护的所有字体。其中的`queryName`为
 
 #### 获得中文字体
 
@@ -70,6 +70,30 @@ module.exports = {
 }	
 
 ```
+
+通过`POST`请求，向服务接口请求，获得在线生成的`css`和相关资源，可自行下载应用到自己的项目中。
+
+接口返回示例:
+
+```
+
+{
+    "code": 0,
+    "msg": "成功生成字体文件",
+    "meta": {
+        "md5": "484b5daf5653f7bfc3cf2c2c91ca79b1",
+        "text": "中体务字文服阅",
+        "textLength": 7
+    },
+    "fontName": "锐字工房光辉",
+    "fontFamily": "RZGFGHDHJ",
+    "cssUrl": "http://webfont.is26.com/fontmin/484b5daf5653f7bfc3cf2c2c91ca79b1/RZGFGHDHJ.css",
+    "zipUrl": "http://webfont.is26.com/fontmin/484b5daf5653f7bfc3cf2c2c91ca79b1.zip",
+    "style": "@font-face {\n    font-family: \"RZGFGHDHJ\";\n    src: url(\"http://webfont.is26.com/fontmin/484b5daf5653f7bfc3cf2c2c91ca79b1/RZGFGHDHJ.eot\"); /* IE9 */\n    src: url(\"http://webfont.is26.com/fontmin/484b5daf5653f7bfc3cf2c2c91ca79b1/RZGFGHDHJ.eot?#iefix\") format(\"embedded-opentype\"), /* IE6-IE8 */\n    url(\"http://webfont.is26.com/fontmin/484b5daf5653f7bfc3cf2c2c91ca79b1/RZGFGHDHJ.woff\") format(\"woff\"), /* chrome, firefox */\n    url(\"http://webfont.is26.com/fontmin/484b5daf5653f7bfc3cf2c2c91ca79b1/RZGFGHDHJ.ttf\") format(\"truetype\"), /* chrome, firefox, opera, Safari, Android, iOS 4.2+ */\n    url(\"http://webfont.is26.com/fontmin/484b5daf5653f7bfc3cf2c2c91ca79b1/RZGFGHDHJ.svg#RZGFGHDHJ\") format(\"svg\"); /* iOS 4.1- */\n    font-style: normal;\n    font-weight: normal;\n}\n\n\n[class^=\"qidian-icon-\"],\n[class*=\" qidian-icon-\"]:after {\n    font-family: \"RZGFGHDHJ\";\n    speak: none;\n    font-style: normal;\n    font-weight: normal;\n    font-variant: normal;\n    text-transform: none;\n    line-height: 1;\n    -webkit-font-smoothing: antialiased;\n    -moz-osx-font-smoothing: grayscale;\n}\n\n\n.qidian-icon-uni4E2D:before {\n    content: \"\\4e2d\";\n}\n\n.qidian-icon-uni4F53:before {\n    content: \"\\4f53\";\n}\n\n.qidian-icon-uni52A1:before {\n    content: \"\\52a1\";\n}\n\n.qidian-icon-uni5B57:before {\n    content: \"\\5b57\";\n}\n\n.qidian-icon-uni6587:before {\n    content: \"\\6587\";\n}\n\n.qidian-icon-uni670D:before {\n    content: \"\\670d\";\n}\n\n.qidian-icon-uni9605:before {\n    content: \"\\9605\";\n}\n\n\n"
+}
+
+```
+
 
 
 
