@@ -3,9 +3,9 @@
 
 module.exports = {
 	port: process.env.PORT || 13013,
-	domain: 'http://webfont.is26.com',
+	domain: 'http://devqidian.gtimg.com',
 	apiName:'/api/v1',
-	publicPath:'/data/static/webfont',
+	publicPath:'/data/static/yfont',
 	staticDomain: '/public',
 	storage: {
 		SecretId: 'AKIDOqb8e2KwJIJ60TtxC66vBxd9qyesrlO6',

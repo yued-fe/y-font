@@ -18,6 +18,9 @@ var EasyZip = require('easy-zip').EasyZip;
 var COS = require('cos-nodejs-sdk-v5');
 var cos = new COS(Y_CONFIG.storage);
 
+
+var customPath = Y_CONFIG.publicPath ? path.join(Y_CONFIG.publicPath) : path.join(process.cwd(), 'public', 'yfont');
+console.log(customPath)
 // 自定义方法
 var tools = require('../lib/tool');
 
@@ -50,11 +53,11 @@ function handleFont(req, res) {
   var fontFamily = originalname.replace(/\.ttf/, '');
   var id = utils.md5(req.body.font + fontString);
   
-  var fontPath = absUrl + '/fontmin/' + id + '/';
-  var cssPath = path.join(process.cwd(), 'public', 'fontmin', id, originalname.replace(/\.ttf/, '.css'));
+  var fontPath = absUrl + '/yfont/' + id + '/';
+  var cssPath = path.join(customPath, id, originalname.replace(/\.ttf/, '.css'));
   var reg = /url\("\/fontmin\/([^/]+)\//g;
-  var outputName = path.join(process.cwd(), 'public', 'fontmin', id + '.zip');
-  var dest = !Y_CONFIG.publicPath ? path.join(Y_CONFIG.publicPath,id) : path.join(process.cwd(), 'public', 'fontmin', id);
+  var outputName = path.join(customPath, id + '.zip');
+  var dest = Y_CONFIG.publicPath ? path.join(Y_CONFIG.publicPath,id) : path.join(customPath, id);
 
   if (req.body.text.length > 0) {
     fontmin = new Fontmin()
@@ -108,8 +111,8 @@ function handleFont(req, res) {
         },
         fontName: fontList[req.body.font].fontDes,
         fontFamily: fontFamily,
-        cssUrl: absUrl + '/fontmin/' + id + '/' + req.body.font + '.css',
-        zipUrl: absUrl + '/fontmin/' + id + '.zip',
+        cssUrl: absUrl + '/yfont/' + id + '/' + req.body.font + '.css',
+        zipUrl: absUrl + '/yfont/' + id + '.zip',
         style: styleData
       });
 
