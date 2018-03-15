@@ -25,7 +25,7 @@ const getFontList = require('./routes/getFontList');
 app.use(Y_CONFIG.apiName + '/get-font', upload.any(), getFont);
 app.use(Y_CONFIG.apiName + '/get-font-list', upload.any(), getFontList);
 
-app.listen(Y_CONFIG.port, () => {
+app.listen(Y_CONFIG.port, process.env.IP,() => {
     console.log(chalk.blue('[服务环境]:') + chalk.green(app.get('env')));
     console.log(chalk.blue('[服务端口]:') + chalk.green(Y_CONFIG.port));
 })

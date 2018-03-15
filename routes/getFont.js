@@ -34,7 +34,6 @@ router.post('/', function(req, res, next) {
 });
 
 function handleFont(req, res) {
-  console.log(typeof(fontList[req.body.font]))
   var fontminOptions = Object.assign({
     base64: true, // inject base64 data:application/x-font-ttf; (gzip font with css). 
     // default = false
@@ -50,11 +49,12 @@ function handleFont(req, res) {
   var output = path.join(process.cwd(), 'assets', 'fonts', originalname);
   var fontFamily = originalname.replace(/\.ttf/, '');
   var id = utils.md5(req.body.font + fontString);
-  var dest = path.join(process.cwd(), 'public', 'fontmin', id);
+  
   var fontPath = absUrl + '/fontmin/' + id + '/';
   var cssPath = path.join(process.cwd(), 'public', 'fontmin', id, originalname.replace(/\.ttf/, '.css'));
   var reg = /url\("\/fontmin\/([^/]+)\//g;
   var outputName = path.join(process.cwd(), 'public', 'fontmin', id + '.zip');
+  var dest = !Y_CONFIG.publicPath ? path.join(Y_CONFIG.publicPath,id) : path.join(process.cwd(), 'public', 'fontmin', id);
 
   if (req.body.text.length > 0) {
     fontmin = new Fontmin()
@@ -115,8 +115,6 @@ function handleFont(req, res) {
 
     })
     .catch(function(err) {
-      console.log(fontList)
-      console.log(req.body.font)
       console.log(err)
       res.send({
         code:1,
