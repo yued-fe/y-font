@@ -7,7 +7,6 @@ var express = require('express');
 var router = express.Router();
 var Fontmin = require('fontmin');
 var intoStream = require('into-stream');
-var uuid = require('node-uuid');
 var crypto = require('crypto');
 var utils = require('utility');
 var rename = require('gulp-rename');
@@ -28,7 +27,6 @@ router.post('/', function(req, res, next) {
 });
 
 function handleFont(req, res) {
-
   var absUrl = Y_CONFIG.domain;
   var styleData;
   var fontmin;

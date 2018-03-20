@@ -1,3 +1,5 @@
+
+var Y_CONFIG = require('./y-font-config');
 var express = require('express');
 var express = require('express');
 var path = require('path');
@@ -21,6 +23,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 var getFont = require('./routes/font');
 
 app.use('/api/v1/get-font', upload.any(), getFont);
+
+// catch 404 and forward to error handler
+app.use(function (req, res, next) {
+    var err = new Error('404: Not Found ' + req.originalUrl); //here
+    err.status = 404;
+    next(err);
+});
 
 
 app.listen(3000);
